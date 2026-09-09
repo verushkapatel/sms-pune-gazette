@@ -1,33 +1,27 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const btn = document.querySelector(".menu-btn");
-  const nav = document.querySelector(".nav");
-  if (btn && nav) {
-    btn.addEventListener("click", () => {
-      const open = nav.classList.toggle("is-open");
-      btn.setAttribute("aria-expanded", open ? "true" : "false");
-      btn.textContent = open ? "Close" : "Menu";
+(function () {
+  var nav = document.querySelector("[data-nav]");
+  if (!nav) return;
+
+  var toggle = nav.querySelector("[data-nav-toggle]");
+
+  if (toggle) {
+    toggle.addEventListener("click", function () {
+      var open = nav.classList.toggle("is-open");
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    });
+
+    nav.querySelectorAll(".menu a").forEach(function (link) {
+      link.addEventListener("click", function () {
+        nav.classList.remove("is-open");
+        toggle.setAttribute("aria-expanded", "false");
+      });
     });
   }
 
-  const dateEl = document.querySelector("[data-today]");
-  if (dateEl) {
-    dateEl.textContent = new Date().toLocaleDateString("en-GB", {
-      weekday: "long",
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    });
-  }
-
-  const form = document.querySelector("form[data-careers]");
-  if (form) {
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-      const note = form.querySelector(".form-note");
-      if (note) {
-        note.textContent =
-          "This is a sample site. Please apply through the official careers page at smspune.com.";
-      }
-    });
-  }
-});
+  var onScroll = function () {
+    nav.classList.toggle("is-scrolled", window.scrollY > 8);
+  };
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
+})();
