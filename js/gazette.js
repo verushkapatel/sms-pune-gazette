@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.addEventListener("click", () => {
       const open = nav.classList.toggle("is-open");
       btn.setAttribute("aria-expanded", open ? "true" : "false");
-      btn.textContent = open ? "Close" : "Index";
+      btn.textContent = open ? "Close" : "Menu";
     });
   }
 
